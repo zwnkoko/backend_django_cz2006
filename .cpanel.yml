@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/xo7qir0c2cfm/backend.cryptopay-cz2006.com/
-    - /bin/cp -R /home/xo7qir0c2cfm/backend_testing/repositories/backend.cryptopay-cz2006.com/ * $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
