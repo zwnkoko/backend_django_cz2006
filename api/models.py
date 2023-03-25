@@ -19,3 +19,12 @@ class User(models.Model):
 
     def __str__(self):
         return(str(self.id)+" "+self.name)
+    
+class Wallet(models.Model):
+    id=models.OneToOneField(Account, primary_key=True, on_delete=models.CASCADE)
+    bitcoin=models.FloatField()
+    bnb=models.FloatField()
+    eth=models.FloatField()
+
+    def __str__(self):
+        return(str(self.id)+" BTC:"+str(self.bitcoin)+" BNB:"+str(self.bnb)+" ETH:"+str(self.eth))
