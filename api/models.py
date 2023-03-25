@@ -28,3 +28,13 @@ class Wallet(models.Model):
 
     def __str__(self):
         return(str(self.id)+" BTC:"+str(self.bitcoin)+" BNB:"+str(self.bnb)+" ETH:"+str(self.eth))
+    
+class Transaction(models.Model):
+    sender=models.IntegerField()
+    receiver=models.IntegerField()
+    time=models.TimeField()
+    crypto_type=models.CharField(max_length=50)
+    amount=models.FloatField()
+
+    def __str__(self):
+        return(str(self.sender)+" to "+str(self.receiver)+" at "+str(self.time)+" "+self.crypto_type+" amount : "+str(self.amount))
