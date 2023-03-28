@@ -101,7 +101,7 @@ def user_wallet(request):
     converted_eth=sgd_conversion(eth_sgd, eth)
  
     #print(bitcoin_sgd, bnb_sgd, eth_sgd)
-    total_balance=converted_bitcoin+converted_bnb+converted_eth
+    total_balance=round(converted_bitcoin+converted_bnb+converted_eth,2)
     data_to_return={
         "id": request.data.get("id"),
         "total_balance":str(total_balance),
