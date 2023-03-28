@@ -155,6 +155,10 @@ def send_crypto(request):
             #print(receiver_wallet)
             sender_coin=sender_wallet.values_list(crypto_upper_case, flat=True).first()
             receiver_coin=receiver_wallet.values_list(crypto_upper_case, flat=True).first()
+
+            if(transaction.data['amount']>sender_coin):
+                return Response({"status":"not enough coin"}, status=status.HTTP_400_BAD_REQUEST)
+            
             sender_coin=round(sender_coin-transaction.data['amount'],2)
             receiver_coin=round(receiver_coin+transaction.data['amount'],2)
             #print("sender")
