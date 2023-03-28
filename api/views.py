@@ -101,23 +101,33 @@ def user_wallet(request):
     converted_eth=sgd_conversion(eth_sgd, eth)
  
     #print(bitcoin_sgd, bnb_sgd, eth_sgd)
+    total_balance=eth_sgd+bitcoin_sgd+bnb_sgd
     data_to_return={
         "id": request.data.get("id"),
-        "bitcoin":{
-            "amount":bitcoin,
-            "converted":converted_bitcoin,
-            "conversion_rate":bitcoin_sgd
+        "total_balance":str(total_balance),
+        "wallets":[
+        {
+            "name":"Bitcoin",
+            "crypto":"BTC",
+            "amount": str(bitcoin),
+            "converted_amount":str(converted_bitcoin),
+            "rate":str(bitcoin_sgd)
         },
-        "bnb":{
-            "amount":bnb,
-            "converted":converted_bnb,
-            "conversion_rate":bnb_sgd
+        {
+            "name":"Binance Coin",
+            "crypto":"BNB",
+            "amount": str(bnb),
+            "converted_amount":str(converted_bnb),
+            "rate":str(bnb_sgd)
         },
-        "eth":{
-            "amount":eth,
-            "converted":converted_eth,
-            "conversion_rate":eth_sgd
+        {
+            "name":"Ethereum",
+            "crypto":"ETH",
+            "amount": str(eth),
+            "converted_amount":str(converted_eth),
+            "rate":str(eth_sgd)
         }
+        ]
     }
     return Response(data_to_return,status=status.HTTP_200_OK)
     
