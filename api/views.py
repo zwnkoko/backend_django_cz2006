@@ -76,14 +76,17 @@ def user_wallet(request):
         response=requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=sgd')
         data = response.json()
         bitcoin_sgd= data['bitcoin']['sgd']
+        bitcoin_sgd=round(bitcoin_sgd,2)
 
         response=requests.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=sgd')
         data = response.json()
         bnb_sgd= data['binancecoin']['sgd']
+        bnb_sgd=round(bnb_sgd,2)
 
         response=requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=sgd')
         data = response.json()
         eth_sgd= data['ethereum']['sgd']
+        eth_sgd=round(eth_sgd,2)
     
     #print(bitcoin_sgd, bnb_sgd, eth_sgd)
 
