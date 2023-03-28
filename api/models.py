@@ -24,22 +24,22 @@ class User(models.Model):
      
 class Wallet(models.Model):
     id=models.OneToOneField(Account, primary_key=True, on_delete=models.CASCADE)
-    bitcoin=models.FloatField()
-    bnb=models.FloatField()
-    eth=models.FloatField()
+    BTC=models.FloatField()
+    BNB=models.FloatField()
+    ETH=models.FloatField()
 
     def __str__(self):
-        return(str(self.id)+" BTC:"+str(self.bitcoin)+" BNB:"+str(self.bnb)+" ETH:"+str(self.eth))
+        return(str(self.id)+" BTC:"+str(self.BTC)+" BNB:"+str(self.BNB)+" ETH:"+str(self.ETH))
     
 class Transaction(models.Model):
     sender=models.IntegerField()
     receiver=models.IntegerField()
     time=models.DateTimeField()
-    crypto_type=models.CharField(max_length=50)
+    crypto=models.CharField(max_length=50)
     amount=models.FloatField()
     transaction_id=models.CharField(max_length=100, default="null")
 
     def __str__(self):
         tz = timezone.get_current_timezone()
         local_time = timezone.localtime(self.time, tz)
-        return(str(self.sender)+" to "+str(self.receiver)+" at "+local_time.strftime("%Y-%m-%d %H:%M:%S %Z")+" "+self.crypto_type+" amount : "+str(self.amount)+" transaction_id :"+str(self.transaction_id))
+        return(str(self.sender)+" to "+str(self.receiver)+" at "+local_time.strftime("%Y-%m-%d %H:%M:%S %Z")+" "+self.crypto+" amount : "+str(self.amount)+" transaction_id :"+str(self.transaction_id))

@@ -22,4 +22,4 @@ class UserName_Serializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model=Transaction
-        fields=['sender', 'receiver', 'crypto_type', 'amount']
+        fields=['sender', 'receiver', 'crypto', 'amount']
