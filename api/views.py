@@ -135,7 +135,7 @@ def user_wallet(request):
 
 # currency conversion - return up to 4 decimal place
 def sgd_conversion(price, amount):
-    return round(price*amount, 4)
+    return round(price*amount, 2)
 
 @api_view(['POST'])
 def send_crypto(request):
