@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from .serializers import AccountSerializer,UserSerializer,UserName_Serializer
-from .models import Account,User,Wallet
+from .serializers import AccountSerializer,UserName_Serializer,TransactionSerializer
+from .models import Account,User,Wallet, Transaction
 import json
-import requests
+import requests, datetime
+from django.utils import timezone
+
+my_datetime = timezone.now()
 
 # Create your views here.
 
@@ -123,3 +126,36 @@ def user_wallet(request):
 # currency conversion - return up to 4 decimal place
 def sgd_conversion(price, amount):
     return round(price*amount, 4)
+
+@api_view(['POST'])
+def send_crypto(request):
+    transaction=TransactionSerializer(data=request.data)
+    if transaction.is_valid():
+        date_time=my_datetime.astimezone(timezone.get_current_timezone())
+        transaction_instance = Transaction(
+            sender=transaction.data['sender'], 
+            receiver=transaction.data['receiver'],
+            crypto_type=transaction.data['crypto_type'],
+            amount=transaction.data['amount'],
+            time=date_time,
+            transaction_id=gen_transaction_id(transaction.data['sender'],
+                                              transaction.data['receiver'],
+                                              transaction.data['crypto_type'],
+                                              transaction.data['amount'],
+                                              date_time),
+            )
+        #print(transaction_instance)
+        #print(datetime.datetime.now())
+        #print (datetime.datetime.now().date())
+        #print (datetime.datetime.now().time())
+        transaction_instance.save()
+        return Response(transaction.data,status=status.HTTP_200_OK)
+    return Response({"status":"fail"}, status=status.HTTP_400_BAD_REQUEST)
+
+def gen_transaction_id(sender,receiver,type,amount,dtime):
+   return_str=str(sender)+str(receiver)+str(type)+str(amount)+str(dtime)
+   return_str=return_str.replace(':', '').replace('.', '').replace('-', '').replace(' ', '')
+   #print(return_str)
+   return return_str
+
+#test

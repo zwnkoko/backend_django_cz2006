@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account,User
+from .models import Account, User, Transaction
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -18,3 +18,8 @@ class UserName_Serializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['name']
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Transaction
+        fields=['sender', 'receiver', 'crypto_type', 'amount']

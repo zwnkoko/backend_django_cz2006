@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+
 
 # Create your models here.
 class Account(models.Model):
@@ -19,7 +21,7 @@ class User(models.Model):
 
     def __str__(self):
         return(str(self.id)+" "+self.name)
-    
+     
 class Wallet(models.Model):
     id=models.OneToOneField(Account, primary_key=True, on_delete=models.CASCADE)
     bitcoin=models.FloatField()
@@ -32,9 +34,12 @@ class Wallet(models.Model):
 class Transaction(models.Model):
     sender=models.IntegerField()
     receiver=models.IntegerField()
-    time=models.TimeField()
+    time=models.DateTimeField()
     crypto_type=models.CharField(max_length=50)
     amount=models.FloatField()
+    transaction_id=models.CharField(max_length=100, default="null")
 
     def __str__(self):
-        return(str(self.sender)+" to "+str(self.receiver)+" at "+str(self.time)+" "+self.crypto_type+" amount : "+str(self.amount))
+        tz = timezone.get_current_timezone()
+        local_time = timezone.localtime(self.time, tz)
+        return(str(self.sender)+" to "+str(self.receiver)+" at "+local_time.strftime("%Y-%m-%d %H:%M:%S %Z")+" "+self.crypto_type+" amount : "+str(self.amount)+" transaction_id :"+str(self.transaction_id))
