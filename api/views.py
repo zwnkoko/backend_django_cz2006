@@ -205,23 +205,48 @@ def transaction_hist(request):
     send_hist=Transaction.objects.filter(sender=data['id'])
     receive_hist=Transaction.objects.filter(receiver=data['id'])
 
+    sender_name=User.objects.filter(id=data['id']).values('name')
+    sender_name=sender_name[0]['name']
     formatted_json=[]
     for i in send_hist:
+        receiver_name=User.objects.filter(id=i.receiver).values('name')
+        receiver_name=receiver_name[0]['name']
+        crypto_name=convert_crypto_name(i.crypto)
+        date_obj = datetime.fromisoformat(str(i.time))
+        formatted_date = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+        temp_json={
+            "purpose":"send",
+            "name":crypto_name,
+            "amount":str(i.amount),
+            "transaction_id":i.transaction_id,
+            "sender_id":i.sender,
+            "sender_name":sender_name,
+            "receiver_id":i.receiver,
+            "receiver_name":receiver_name,
+            "date": formatted_date
+        }
+        formatted_json.append(temp_json)
+
+    for i in receive_hist:
       crypto_name=convert_crypto_name(i.crypto)
       date_obj = datetime.fromisoformat(str(i.time))
       formatted_date = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+      other_sender_name=User.objects.filter(id=i.sender).values('name')
+      other_sender_name=other_sender_name[0]['name']
       temp_json={
-          "purpose":"send",
+          "purpose":"receive",
           "name":crypto_name,
           "amount":i.amount,
           "transaction_id":i.transaction_id,
-          "sender":i.sender,
-          "receiver":i.receiver,
+          "sender_id":i.sender,
+          "sender_name":other_sender_name,
+          "receiver_id":i.receiver,
+          "receiver_name":sender_name,
           "date": formatted_date
       }
       formatted_json.append(temp_json)
 
-    return Response(formatted_json, status=status.HTTP_200_OK)
+    return Response({"Transaction": formatted_json}, status=status.HTTP_200_OK)
 
 
 def convert_crypto_name(name):
