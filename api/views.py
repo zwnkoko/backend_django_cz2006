@@ -35,7 +35,7 @@ def user_login(request):
         data_email = data['email']
         data_password = data['password']
         #print(data)
-        query_account=Account.objects.filter(email=data_email, password=data_password, merchant=False)
+        query_account=Account.objects.filter(email=data_email, password=data_password)
         if not query_account:
             #print("incorrect")
             return Response({"status" : "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
