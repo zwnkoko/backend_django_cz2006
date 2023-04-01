@@ -7,4 +7,5 @@ urlpatterns = [
     path('signup/user/', views.user_signup),
     path('wallet/user/', views.user_wallet ),
     path('send/', views.send_crypto),
+    path('transaction/hist/', views.transaction_hist),
 ]

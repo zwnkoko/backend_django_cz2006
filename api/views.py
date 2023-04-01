@@ -8,6 +8,7 @@ from .models import Account,User,Wallet, Transaction
 import json
 import requests, datetime
 from django.utils import timezone
+from datetime import datetime
 
 my_datetime = timezone.now()
 
@@ -194,3 +195,40 @@ def gen_transaction_id(sender,receiver,type,amount,dtime):
    #print(return_str)
    return return_str
 
+
+@api_view(['POST'])
+def transaction_hist(request):
+    data=request.data
+    if not (data):
+        return Response({"status":"fail"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    send_hist=Transaction.objects.filter(sender=data['id'])
+    receive_hist=Transaction.objects.filter(receiver=data['id'])
+
+    formatted_json=[]
+    for i in send_hist:
+      crypto_name=convert_crypto_name(i.crypto)
+      date_obj = datetime.fromisoformat(str(i.time))
+      formatted_date = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+      temp_json={
+          "purpose":"send",
+          "name":crypto_name,
+          "amount":i.amount,
+          "transaction_id":i.transaction_id,
+          "sender":i.sender,
+          "receiver":i.receiver,
+          "date": formatted_date
+      }
+      formatted_json.append(temp_json)
+
+    return Response(formatted_json, status=status.HTTP_200_OK)
+
+
+def convert_crypto_name(name):
+    if(name == "BTC"):
+        return "Bitcoin"
+    elif(name=="ETH"):
+        return "Ethereum"
+    elif(name=="BNB"):
+        return "Binance Coin"
+    return "Unknown"
