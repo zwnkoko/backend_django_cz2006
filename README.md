@@ -6,19 +6,22 @@ Cryptopay Backend System
 
 ## Description
 
-This is a django rest api backend project for frontend web UI and mobile app.
-This project repo is intended for the demo/project submission.
+This project is a Django Rest Framework-based backend system for the Cryptopay web UI and mobile app. 
+It provides real-time cryptocurrency price, user authentication, and virtual coin transactions. 
+The project repository is intended for demo and project submission purposes.
 
 ## Features
 
-- Provide real time Crypto price
-- Allow sign up
-- User Authentication
-- Virtual coin transaction (not real crypto)
+- Real-time cryptocurrency price: The system provides real-time cryptocurrency prices to users.
+- User sign up: Users can sign up to the platform.
+- User authentication: The system authenticates users to access the platform.
+- Virtual coin transactions: Users can transact with virtual coins(Not actual Crypto).
 
 ## Technologies Used
 
-- Django rest framework
+- Django Rest Framework: A powerful and flexible toolkit for building Web APIs.
+- Python: An interpreted, high-level, general-purpose programming language.
+- SQLite: A lightweight, file-based database management system.
 
 ## Installation
 
@@ -31,6 +34,9 @@ This project repo is intended for the demo/project submission.
 ## Usage
 
 The API endpoints can be accessed by sending HTTP requests to `http://localhost:8000/api/`.
+
+### Live Website
+Visit http://backend.cryptopay-cz2006.com/ to see the live website. Note that the domain will expire in early 2024.
 
 ## Contributors
 
