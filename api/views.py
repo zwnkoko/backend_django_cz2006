@@ -63,6 +63,8 @@ def user_signup(request):
          account_instance=account.save()
          user_instance = User(id=account_instance, name=request.data.get("name"))
          user_instance.save()
+         wallet_instance=Wallet(id=account_instance, BTC=10, BNB=50, ETH=20)
+         wallet_instance.save()
          return Response({"status" : "created"}, status=status.HTTP_201_CREATED)
     return Response({"status" : "incomplete"}, status=status.HTTP_424_FAILED_DEPENDENCY)
 
