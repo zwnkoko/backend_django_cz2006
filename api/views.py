@@ -238,7 +238,7 @@ def transaction_hist(request):
       temp_json={
           "purpose":"receive",
           "name":crypto_name,
-          "amount":i.amount,
+          "amount":str(i.amount),
           "transaction_id":i.transaction_id,
           "sender_id":i.sender,
           "sender_name":other_sender_name,
